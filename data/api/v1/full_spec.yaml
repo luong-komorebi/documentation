@@ -3801,7 +3801,6 @@ components:
       - dbm_queries_usage
       - estimated_indexed_logs_usage
       - estimated_indexed_spans_usage
-      - estimated_ingested_spans_usage
       - fargate_usage
       - functions_usage
       - indexed_logs_usage
@@ -3827,7 +3826,6 @@ components:
       - DBM_QUERIES_USAGE
       - ESTIMATED_INDEXED_LOGS_USAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
-      - ESTIMATED_INGESTED_SPANS_USAGE
       - FARGATE_USAGE
       - FUNCTIONS_USAGE
       - INDEXED_LOGS_USAGE
@@ -7034,8 +7032,6 @@ components:
       - estimated_indexed_logs_percentage
       - estimated_indexed_spans_usage
       - estimated_indexed_spans_percentage
-      - estimated_ingested_spans_usage
-      - estimated_ingested_spans_percentage
       - fargate_usage
       - fargate_percentage
       - functions_usage
@@ -7085,8 +7081,6 @@ components:
       - ESTIMATED_INDEXED_LOGS_PERCENTAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
       - ESTIMATED_INDEXED_SPANS_PERCENTAGE
-      - ESTIMATED_INGESTED_SPANS_USAGE
-      - ESTIMATED_INGESTED_SPANS_PERCENTAGE
       - FARGATE_USAGE
       - FARGATE_PERCENTAGE
       - FUNCTIONS_USAGE
@@ -7175,16 +7169,6 @@ components:
           type: number
         estimated_indexed_spans_usage:
           description: The estimated indexed spans usage by tag(s). This field is
-            in private beta.
-          format: double
-          type: number
-        estimated_ingested_spans_percentage:
-          description: The percentage of estimated ingested spans usage by tag(s).
-            This field is in private beta.
-          format: double
-          type: number
-        estimated_ingested_spans_usage:
-          description: The estimated ingested spans usage by tag(s). This field is
             in private beta.
           format: double
           type: number
@@ -14071,8 +14055,6 @@ components:
       - estimated_indexed_logs_percentage
       - estimated_indexed_spans_usage
       - estimated_indexed_spans_percentage
-      - estimated_ingested_spans_usage
-      - estimated_ingested_spans_percentage
       type: string
       x-enum-varnames:
       - API_PERCENTAGE
@@ -14101,8 +14083,6 @@ components:
       - ESTIMATED_INDEXED_LOGS_PERCENTAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
       - ESTIMATED_INDEXED_SPANS_PERCENTAGE
-      - ESTIMATED_INGESTED_SPANS_USAGE
-      - ESTIMATED_INGESTED_SPANS_PERCENTAGE
     UsageAttributionSupportedMetrics:
       description: Supported fields for usage attribution requests (valid requests
         contain one or more metrics, or `*` for all).
@@ -14143,8 +14123,6 @@ components:
       - appsec_percentage
       - estimated_indexed_spans_usage
       - estimated_indexed_spans_percentage
-      - estimated_ingested_spans_usage
-      - estimated_ingested_spans_percentage
       - '*'
       type: string
       x-enum-varnames:
@@ -14184,8 +14162,6 @@ components:
       - APPSEC_PERCENTAGE
       - ESTIMATED_INDEXED_SPANS_USAGE
       - ESTIMATED_INDEXED_SPANS_PERCENTAGE
-      - ESTIMATED_INGESTED_SPANS_USAGE
-      - ESTIMATED_INGESTED_SPANS_PERCENTAGE
       - ALL
     UsageAttributionTagNames:
       additionalProperties:
@@ -14237,8 +14213,6 @@ components:
         appsec_percentage:
           description: The percentage of Application Security Monitoring host usage
             by tag(s).
-          format: double
-          type: number
         appsec_usage:
           description: The Application Security Monitoring host usage by tag(s).
           format: double
@@ -14336,16 +14310,6 @@ components:
           type: number
         estimated_indexed_spans_usage:
           description: The estimated indexed spans usage by tag(s). Note this field
-            is in private beta.
-          format: double
-          type: number
-        estimated_ingested_spans_percentage:
-          description: The percentage of estimated ingested spans usage by tag(s).
-            Note this field is in private beta.
-          format: double
-          type: number
-        estimated_ingested_spans_usage:
-          description: The estimated ingested spans usage by tag(s). Note this field
             is in private beta.
           format: double
           type: number
@@ -25480,6 +25444,11 @@ paths:
           description: Not Found
         '429':
           $ref: '#/components/responses/TooManyRequestsResponse'
+      security:
+      - AuthZ:
+        - security_monitoring_signals_write
+        apiKeyAuth: []
+        appKeyAuth: []
       summary: Add a security signal to an incident
       tags:
       - Security Monitoring
